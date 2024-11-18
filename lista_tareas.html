@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tareas</title>
+    <style>
+        /* CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1f1ff7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: #6c63ff;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        main {
+            padding: 1rem;
+        }
+
+        form {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            background: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5753c9;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        li.completed {
+            text-decoration: line-through;
+            color: #6c757d;
+            background: #e9ecef;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            border: none;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #d9534f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Lista de Tareas</h1>
+        </header>
+        <main>
+            <form id="task-form">
+                <input type="text" id="task-input" placeholder="Escribe una nueva tarea" required>
+                <button type="submit">Agregar</button>
+            </form>
+            <ul id="task-list"></ul>
+        </main>
+        <footer>
+            <p style="text-align: center; padding: 1rem; color: #aaa;">© 2024 Mi Lista de Tareas</p>
+        </footer>
+    </div>
+
+    <script>
+        // JavaScript
+        const taskForm = document.getElementById('task-form');
+        const taskInput = document.getElementById('task-input');
+        const taskList = document.getElementById('task-list');
+
+        // Agregar una tarea
+        taskForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const taskText = taskInput.value.trim();
+
+            if (taskText === '') {
+                alert('Por favor, escribe una tarea.');
+                return;
+            }
+
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${taskText}</span>
+                <button class="delete-btn">Eliminar</button>
+            `;
+
+            // Marcar como completada o no completada
+            li.addEventListener('click', function () {
+                li.classList.toggle('completed');
+            });
+
+            // Eliminar tarea
+            li.querySelector('.delete-btn').addEventListener('click', function (e) {
+                e.stopPropagation();
+                li.remove();
+            });
+
+            taskList.appendChild(li);
+            taskInput.value = '';
+        });
+    </script>
+</body>
+</html>
